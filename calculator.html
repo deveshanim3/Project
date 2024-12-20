@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+        }
+        header {
+            background: linear-gradient(90deg, #4CAF50, #2f9e44);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .section h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #4CAF50;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        button {
+            background: linear-gradient(90deg, #4CAF50, #2f9e44);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #45a049, #268c3c);
+        }
+        input {
+            padding: 12px;
+            margin: 10px 0;
+            width: calc(100% - 24px);
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .back {
+            border-radius: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #4CAF50, #2f9e44);
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .back:hover {
+            background: linear-gradient(90deg, #45a049, #268c3c);
+        }
+        .section p {
+            font-size: 16px;
+            color: #555;
+            margin-top: 15px;
+        }
+        #logout {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Loan Management System
+    </header>
+    <a href="home.html" class="back">Back</a>
+    <div class="dashboard">
+        <div class="section">
+            <h2>EMI Calculator</h2>
+            <label for="principal">Loan Amount:</label>
+            <input type="number" id="principal" placeholder="Enter loan amount">
+            <label for="rate">Annual Interest Rate (%):</label>
+            <input type="number" id="rate" placeholder="Enter interest rate">
+            <label for="time">Loan Tenure (years):</label>
+            <input type="number" id="time" placeholder="Enter loan tenure">
+            <button id="calculateEmi">Calculate EMI</button>
+            <p>Monthly EMI: $<span id="emiResult">0</span></p>
+        </div>
+        
+        <div class="section">
+            <h2>Loan Calculation</h2>
+            <label for="totalLoan">Total Loan:</label>
+            <input type="number" id="totalLoan" placeholder="Enter total loan">
+            <label for="interest">Interest Rate (%):</label>
+            <input type="number" id="interest" placeholder="Enter interest rate">
+            <label for="duration">Duration (years):</label>
+            <input type="number" id="duration" placeholder="Enter duration">
+            <button id="calculateLoan">Calculate Total Payable</button>
+            <p>Total Payable Amount: $<span id="loanResult">0</span></p>
+        </div>
+        
+        <button id="logout">Logout</button>
+    </div>
+    <script src="calculator.js"></script>
+</body>
+</html>
