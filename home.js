@@ -58,8 +58,7 @@ addReminderBtn.addEventListener("click", async () => {
             // Calculate Monthly EMI
             const monthlyRate = annualInterestRate / (12 * 100); // Annual interest rate to monthly
             const tenureMonths = tenureYears * 12;
-            const emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) /
-                        (Math.pow(1 + monthlyRate, tenureMonths) - 1);
+            const emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) /(Math.pow(1 + monthlyRate, tenureMonths) - 1);
             const monthlyEMI = emi.toFixed(2);
 
             const totalPayable = (monthlyEMI * tenureMonths).toFixed(2);
