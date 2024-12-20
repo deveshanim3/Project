@@ -25,7 +25,7 @@ onAuthStateChanged(auth, async (user) => {
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        document.getElementById("username").textContent = userData.name;  // Display the name in the span
+        document.getElementById("username").textContent = userData.name; 
       } else {
         console.log("No user data found in Firestore");
       }
