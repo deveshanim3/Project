@@ -45,19 +45,39 @@ document.getElementById('logout').addEventListener('click', () => {
 });
 
 const addReminderBtn = document.getElementById("addReminder");
+
 addReminderBtn.addEventListener("click", async () => {
     const loanName = document.getElementById("loanName").value;
-    const amount = document.getElementById("amount").value;
+    const amount = parseFloat(document.getElementById("amount").value);
     const dueDate = document.getElementById("dueDate").value;
+    const annualInterestRate = parseFloat(document.getElementById("interest").value);
+    const tenureYears = parseInt(document.getElementById("time").value);
 
-    if (loanName && amount && dueDate) {
+    if (loanName && amount && dueDate && annualInterestRate && tenureYears) {
         try {
+            // Calculate Monthly EMI
+            const monthlyRate = annualInterestRate / (12 * 100); // Annual interest rate to monthly
+            const tenureMonths = tenureYears * 12;
+            const emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) /
+                        (Math.pow(1 + monthlyRate, tenureMonths) - 1);
+            const monthlyEMI = emi.toFixed(2);
+
+            const totalPayable = (monthlyEMI * tenureMonths).toFixed(2);
+
+            alert(`Monthly EMI for ${loanName}: $${monthlyEMI}\nTotal Payable: $${totalPayable}`);
+
             await addDoc(collection(db, "reminders"), {
                 loanName,
                 amount,
                 dueDate,
+                annualInterestRate,
+                tenureYears,
+                monthlyEMI,
+                totalPayable,
             });
+
             alert("Reminder added successfully!");
+            
         } catch (error) {
             console.error("Error adding reminder:", error);
         }
@@ -65,6 +85,7 @@ addReminderBtn.addEventListener("click", async () => {
         alert("Please fill all fields!");
     }
 });
+
 
 // Display Reminders in Real Time
 const reminderList = document.getElementById("reminderList");
@@ -74,13 +95,18 @@ onSnapshot(collection(db, "reminders"), (snapshot) => {
         const reminder = doc.data();
         const li = document.createElement("li");
         li.innerHTML = `
-            ${reminder.loanName} - $${reminder.amount} - Due: ${reminder.dueDate} 
+            <strong>${reminder.loanName}</strong><br>
+            Amount: $${reminder.amount}<br>
+            Due Date: ${reminder.dueDate}<br>
+            Annual Interest Rate: ${reminder.annualInterestRate}%<br>
+            Tenure: ${reminder.tenureYears} years<br>
+            Monthly EMI: $${reminder.monthlyEMI}<br>
+            Total Payable: $${reminder.totalPayable}<br>
             <button data-id="${doc.id}" class="deleteReminder">Mark as Paid</button>
         `;
         reminderList.appendChild(li);
     });
 
-    // Attach event listeners to delete buttons
     document.querySelectorAll(".deleteReminder").forEach((button) => {
         button.addEventListener("click", async (e) => {
             const id = e.target.getAttribute("data-id");
