@@ -10,18 +10,31 @@
     <header>
         <h1>Loan Management Dashboard</h1>
     </header>
+    <a href="calculator.html">Calculator</a>
     <div class="dashboard">
         <div id="user-info" class="section">
             <p>Welcome, <span id="username">User</span></p>
         </div>
-        <a href="calculator.html">Open Loan Calculator</a>
+
         <div class="section">
-            <h2>Loan Reminder</h2>
-            <label for="reminderDate">Next Payment Date:</label>
-            <input type="date" id="reminderDate">
-            <button id="setReminder">Set Reminder</button>
-            <p id="reminderMessage">You haven't set any reminders yet.</p>
+            <h2>Add Loan/EMI Reminder</h2>
+            <label for="loanName">Loan Name:</label>
+            <input type="text" id="loanName" placeholder="e.g., Car Loan">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount">
+
+            <label for="dueDate">Due Date:</label>
+            <input type="date" id="dueDate">
+            <button id="addReminder">Add Reminder</button>
         </div>
+
+        <div class="section">
+            <h2>Your Reminders</h2>
+            <ul id="reminderList">
+                <!-- Reminders will be dynamically added here -->
+            </ul>
+        </div>
+
         <button id="logout">Logout</button>
     </div>
     <script type="module" src="home.js"></script>
