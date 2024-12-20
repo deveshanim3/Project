@@ -68,3 +68,4 @@ window.showRegister = () => {
   document.getElementById("loginForm").classList.add("hidden");
   document.getElementById("registerForm").classList.remove("hidden");
 };
+
