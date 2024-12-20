@@ -1,6 +1,7 @@
 // Import the Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -16,6 +17,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Login functionality
 window.login = async () => {
@@ -36,16 +38,25 @@ window.login = async () => {
 window.register = async () => {
   const email = document.getElementById("registerEmail").value;
   const password = document.getElementById("registerPassword").value;
+  const name = document.getElementById("registerName").value;
 
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      name: name,
+      email: user.email 
+    });
+
     alert("Registration Successful!");
     console.log("User registered:", userCredential.user);
-    window.location.href="home.html"
+    window.location.href = "home.html";
   } catch (error) {
     alert("Error: " + error.message);
   }
 };
+
 
 // Show/hide forms
 window.showLogin = () => {
