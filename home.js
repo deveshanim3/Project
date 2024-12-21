@@ -130,15 +130,26 @@ onSnapshot(collection(db, "reminders"), (snapshot) => {
     }
 
     document.querySelectorAll(".deleteReminder").forEach((button) => {
-        button.addEventListener("click", async (e) => {
-            const id = e.target.getAttribute("data-id");
-            try {
+      button.addEventListener("click", async (e) => {
+        const id = e.target.getAttribute("data-id");
+        try {
+            // Get reminder data before deletion
+            const reminderDoc = await getDoc(doc(db, "reminders", id));
+            if (reminderDoc.exists()) {
+                const reminderData = reminderDoc.data();
+    
+                // Add reminder to 'history' collection
+                await addDoc(collection(db, "history"), reminderData);
+    
+                // Delete the original reminder
                 await deleteDoc(doc(db, "reminders", id));
-                alert("Reminder marked as paid!");
-            } catch (error) {
-                console.error("Error deleting reminder:", error);
+                alert("Reminder marked as paid and moved to history!");
             }
-        });
+        } catch (error) {
+            console.error("Error moving reminder to history:", error);
+        }
+    });
+    
     });
 });
 

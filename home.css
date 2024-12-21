@@ -113,6 +113,9 @@ a:hover {
     background: linear-gradient(90deg, #2f9d78, #144d6f);
     transform: translateY(-2px);
 }
+a{
+    margin: 1%;
+}
 
 #reminderMessage {
     margin-top: 15px;
