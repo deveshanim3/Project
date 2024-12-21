@@ -6,7 +6,11 @@ body {
     background: linear-gradient(to bottom, #0c1f22, #080c11);
     color: #333;
 }
-
+#calculator{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 header {
     background: linear-gradient(90deg, #43cea2, #185a9d);
     color: white;
@@ -86,6 +90,24 @@ a {
     border-radius: 8px;
     transition: background 0.3s, transform 0.2s;
 }
+.sticky-box {
+    position: sticky;
+    bottom: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #ff4e50, #f9d423);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
 
 a:hover {
     background: linear-gradient(90deg, #2f9d78, #144d6f);

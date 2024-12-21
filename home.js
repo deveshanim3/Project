@@ -89,7 +89,14 @@ addReminderBtn.addEventListener("click", async () => {
 // Display Reminders in Real Time
 const reminderList = document.getElementById("reminderList");
 onSnapshot(collection(db, "reminders"), (snapshot) => {
+
     reminderList.innerHTML = "";
+    const stickyReminderList = document.getElementById("stickyReminderList");
+    const stickyBox = document.getElementById("stickyReminder");
+    let upcomingPayments = false;
+    const currentDate = new Date();
+    stickyReminderList.innerHTML = "";
+
     snapshot.forEach((doc) => {
         const reminder = doc.data();
         const li = document.createElement("li");
@@ -103,8 +110,24 @@ onSnapshot(collection(db, "reminders"), (snapshot) => {
             Total Payable: $${reminder.totalPayable}<br>
             <button data-id="${doc.id}" class="deleteReminder">Mark as Paid</button>
         `;
+
         reminderList.appendChild(li);
+        const dueDate = new Date(reminder.dueDate);
+        const daysUntilDue = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+        
+        if (daysUntilDue > 0 && daysUntilDue <= 7) {
+          const stickyLi = document.createElement("li");
+          stickyLi.textContent = `${reminder.loanName} - Due in ${daysUntilDue} days`;
+          stickyReminderList.appendChild(stickyLi);
+          upcomingPayments = true;
+      }
+
     });
+    if (upcomingPayments) {
+      stickyBox.classList.remove("hidden");
+    } else {
+      stickyBox.classList.add("hidden");
+    }
 
     document.querySelectorAll(".deleteReminder").forEach((button) => {
         button.addEventListener("click", async (e) => {
